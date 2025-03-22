@@ -22,7 +22,7 @@ const CourseProCard = ({ id }) => {
   return (
     <div
       key={`cid${id}`}
-      className='overflow-hidden rounded-md cursor-pointer duration-500 transition-transform hover:scale-[101%] shadow-sm hover:shadow-md bg-onPrimary-main border max-w-[250px] min-h-[310px] w-full'
+      className='overflow-hidden rounded-md cursor-pointer duration-500 transition-transform hover:scale-[101%] shadow-sm hover:shadow-md bg-onPrimary-main border max-w-[280px] min-h-[310px] w-full'
       onClick={() => navigate(`/courses/onClientReq/${id}`)}
     >
       <div className='w-full grid'>

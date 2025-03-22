@@ -1,12 +1,12 @@
-import axios from "axios";
-import reqs from "../assets/requests";
+import axios from 'axios';
+import reqs from '../assets/requests';
 
 const getExamAdmin = async (mode, setData, cid) => {
   try {
     axios
       .post(
         reqs.GET_EXAM_ADMIN,
-        { mode: "all" },
+        { mode: 'all' },
         {
           withCredentials: true,
         }
@@ -28,7 +28,7 @@ const getSingleExamAdmin = async (setData, eid) => {
     axios
       .post(
         reqs.GET_QUES_ADMIN,
-        { mode: "answer", examId: eid },
+        { mode: 'answer', examId: eid },
         {
           withCredentials: true,
         }
@@ -38,7 +38,7 @@ const getSingleExamAdmin = async (setData, eid) => {
         if (res.data.succeed) {
           const objData = Object.keys(res.data?.result);
           const newArr = objData.map((ele) => res.data.result[ele]);
-          setData({ questions: newArr }); 
+          setData({ questions: newArr });
         }
       })
       .catch((err) => {
@@ -53,7 +53,7 @@ const getSingleExamClient = async (cid, eid, setData) => {
     axios
       .post(
         reqs.GET_EXAM_CLIENT,
-        { mode: "single", examId: eid, courseId: cid },
+        { mode: 'single', examId: eid, courseId: cid },
         {
           withCredentials: true,
         }
@@ -74,7 +74,7 @@ const getAllExamClient = async (courseId, setData) => {
     axios
       .post(
         reqs.GET_EXAM_CLIENT,
-        { courseId: courseId, mode: "all" },
+        { courseId: courseId, mode: 'all' },
         {
           withCredentials: true,
         }
@@ -92,13 +92,18 @@ const getAllExamClient = async (courseId, setData) => {
     alert(error);
   }
 };
-const getQuesClient = async (examId, mode="question", setData) => {
+const getQuesClient = async (
+  examId,
+  mode = 'question',
+  setData,
+  fetchMode = null
+) => {
   /*question | answer */
   try {
     axios
       .post(
         reqs.GET_QUES_CLIENT,
-        { mode: mode, examId: examId },
+        { mode: mode, examId: examId, fetchMode },
         {
           withCredentials: true,
         }

@@ -15,19 +15,19 @@ const Hero = () => {
     <div className='relative w-full flex items-center pt-24 md:pt-20 min-h-[65vh]'>
       <div className='grid md:grid-cols-2 gap-10 items-center h-full w-full my-auto'>
         {/* Left Content */}
-        <div className='flex flex-col gap-6 max-w-[100%] mx-auto md:mx-0'>
+        <div className='flex flex-col gap-3 sm:gap-6 max-w-[100%] mx-auto md:mx-0'>
           <p className='text-secondary-dark font-semibold text-base uppercase'>
             Chemistry Online
           </p>
-          <h1 className='font-bold text-5xl xl:text-6xl text-onPrimary-main md:leading-[3.5rem] xl:leading-[4.2rem]'>
+          <h1 className='font-bold text-[2.9rem] sm:text-5xl xl:text-6xl text-onPrimary-main leading-tight sm:leading-[3.5rem] xl:leading-[4.2rem]'>
             Learn <span className=''>Chemistry</span> with&nbsp;
             <span className='text-yellow-400'>Afnan</span>
           </h1>
-          <p className='text-onPrimary-main text-md break-words'>
+          <p className='text-onPrimary-main text-md break-words mt-4 sm:mt-0'>
             Interactive classes designed for your success.
           </p>
 
-          <div className='flex gap-5'>
+          <div className='flex gap-5 mt-6 sm:mt-0'>
             <PrimaryButton
               text={'Start Learning'}
               icon={<FaChevronDown />}
