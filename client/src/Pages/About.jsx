@@ -3,119 +3,106 @@ import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { MdOutlineClose } from 'react-icons/md';
 import { getImageGallery } from '../axios/gallery';
 import { reqImgWrapper } from '../assets/requests';
+
 const About = () => {
   return (
-    <div className='px-3 m-auto w-full my-10 !mb-32 min-h-[50vh]'>
-      <h1 className='text-center text-4xl md:text-5xl my-2 mb-8 sm:mb-12 font-semibold'>
-        About Us
+    <section className='px-4 lg:px-16 w-full mt-20 pb-32 min-h-[60vh]'>
+      <h1 className='text-center text-4xl md:text-5xl font-semibold text-darkText mb-12'>
+        <span className='text-secondary-main underline underline-offset-4'>
+          <span className='text-onPrimary-main'>About</span>
+        </span>{' '}
+        <span className='text-yellow-400'>ChemGenie</span>
       </h1>
-      <div className='my-5 lg:mx-5 text-sm sm:text-[1rem]'>
-        <p className='pl-4 rounded-l-xl text-orange-800'>
-          ChemGenie is a dynamic online chemistry education platform designed to
-          make learning chemistry engaging and accessible for students of all
-          levels. Our comprehensive resources, including interactive lessons,
-          videos, and quizzes, help students master complex concepts and excel
-          in their studies.
+
+      <div className='bg-gradient-radial p-8 rounded-2xl shadow-sm max-w-5xl mx-auto text-onPrimary-main space-y-6'>
+        <p className='text-lg leading-relaxed'>
+          <span className='font-semibold text-secondary-dark'>ChemGenie</span>{' '}
+          is a dynamic online chemistry education platform designed to make
+          learning chemistry engaging and accessible for students of all levels.
+          With interactive lessons, videos, and quizzes, we help students master
+          complex concepts and excel academically.
         </p>
-        <br />
-        <p className='pl-4 rounded-l-xl text-onPrimary-main'>
-          At ChemGenie, we believe that understanding chemistry is the key to
-          unlocking the mysteries of the natural world. Our platform offers a
-          blend of theoretical knowledge and practical applications, ensuring
-          students gain a deep and lasting understanding of chemical principles
-          through a user-friendly and interactive online experience.
+        <p className='text-lg leading-relaxed'>
+          We believe understanding chemistry unlocks the mysteries of the
+          natural world. Our platform combines theoretical knowledge with
+          practical applications for a lasting grasp of chemical principles—all
+          through an interactive and user-friendly experience.
         </p>
       </div>
+
       <Gallery />
-    </div>
+    </section>
   );
 };
 
 const Gallery = () => {
-  window.global = window.global || window;
   const [galleryImages, setGallery] = useState([{ img: '' }]);
-
-  useEffect(() => {
-    try {
-      getImageGallery(setGallery);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-  // console.table(galleryImages);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [openPhoto, setOpenPhoto] = useState(false);
 
-  const handleOpen = function (index) {
-    setPhotoIndex(index);
-    setOpenPhoto(true);
+  useEffect(() => {
+    getImageGallery(setGallery);
+  }, []);
+
+  const prevPhoto = () => {
+    setPhotoIndex(photoIndex === 0 ? galleryImages.length - 1 : photoIndex - 1);
   };
 
-  const prevPhoto = function () {
-    photoIndex === 0
-      ? setPhotoIndex(galleryImages.length - 1)
-      : setPhotoIndex(photoIndex - 1);
+  const nextPhoto = () => {
+    setPhotoIndex(photoIndex === galleryImages.length - 1 ? 0 : photoIndex + 1);
   };
 
-  const nextPhoto = function () {
-    photoIndex === galleryImages.length - 1
-      ? setPhotoIndex(0)
-      : setPhotoIndex(photoIndex + 1);
-  };
-
-  const closePhoto = function () {
-    setOpenPhoto(false);
-  };
   return (
     <>
+      {/* Fullscreen Image Viewer */}
       <div
-        className={`sliderwrap fixed top-0 bottom-0 left-0 right-0 z-50 bg-black flex items-center justify-center w-full h-full transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center transition-all duration-300 ${
           openPhoto
-            ? 'opacity-100 pointer-events-auto scale-100'
-            : 'pointer-events-none opacity-0 scale-50'
+            ? 'scale-100 opacity-100'
+            : 'scale-75 opacity-0 pointer-events-none'
         }`}
       >
         <FaChevronCircleLeft
           onClick={prevPhoto}
-          className='fixed cursor-pointer text-white z-50 opacity-60 hover:opacity-100 top-2/4 left-10 text-2xl'
+          className='text-white text-3xl cursor-pointer absolute left-10 top-1/2 transform -translate-y-1/2 opacity-70 hover:opacity-100'
         />
         <FaChevronCircleRight
           onClick={nextPhoto}
-          className='fixed cursor-pointer text-white z-50 opacity-60 hover:opacity-100 top-2/4 right-10 text-2xl'
+          className='text-white text-3xl cursor-pointer absolute right-10 top-1/2 transform -translate-y-1/2 opacity-70 hover:opacity-100'
         />
         <MdOutlineClose
-          onClick={closePhoto}
-          className='fixed cursor-pointer text-white z-50 opacity-60 top-10 right-10 hover:opacity-100 text-2xl hover:rounded-lg hover:bg-red-600 rounded-lg bg-slate-600'
+          onClick={() => setOpenPhoto(false)}
+          className='text-white text-3xl cursor-pointer absolute top-10 right-10 opacity-70 hover:opacity-100'
         />
 
-        <div className='fullImg max-w-2xl'>
-          <img
-            src={reqImgWrapper(galleryImages[photoIndex]?.bigImage)}
-            alt=''
-            srcSet=''
-          />
-        </div>
+        <img
+          src={reqImgWrapper(galleryImages[photoIndex]?.bigImage)}
+          alt='Gallery'
+          className='max-h-[80vh] rounded-lg shadow-2xl'
+        />
       </div>
 
-      <div className='gallerywrap flex flex-wrap gap-3 items-center justify-center max-w-2xl m-auto my-9 '>
-        {galleryImages?.length > 0 &&
-          galleryImages.map((slide, index) => {
-            return (
-              <div
-                className='bg-slate-50 single md:w-64 md:h-64 cursor-pointer border-2 border-solid shadow-lg overflow-hidden flex items-center justify-center rounded-md w-48 h-48'
-                key={index}
-                onClick={() => {
-                  handleOpen(index);
-                }}
-              >
-                <img
-                  className='hover:scale-105 w-full h-full transition-all object-cover'
-                  src={reqImgWrapper(slide?.bigImage)}
-                  alt='gallery-image'
-                />
-              </div>
-            );
-          })}
+      {/* Gallery Grid */}
+      <div className='mt-16 flex justify-center flex-wrap gap-2 mx-auto '>
+        {galleryImages.map((slide, index) => (
+          <div
+            key={index}
+            className='relative group w-full sm:w-auto cursor-pointer rounded-lg shadow-lg border-2 border-primary-dark'
+            onClick={() => {
+              setPhotoIndex(index);
+              setOpenPhoto(true);
+            }}
+          >
+            <img
+              src={reqImgWrapper(slide?.bigImage)}
+              alt='Gallery'
+              className='w-full h-auto sm:h-[250px] object-cover rounded-lg group-hover:scale-[101%] transition-transform duration-300'
+            />
+            <div className='absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center text-white text-lg font-semibold'>
+              View
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

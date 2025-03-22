@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getAllExamClient } from "../../../axios/global";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { getAllExamClient } from '../../../axios/global';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function sortByTime(a, b) {
   let x = a?.examStartTime;
@@ -17,9 +17,9 @@ function ExamPage() {
     getAllExamClient(cid, setdata);
   }, []);
   return (
-    <div className="min-h-full flex items-center flex-col justify-center relative">
+    <div className='min-h-full flex items-center flex-col justify-center relative'>
       <div>
-        <h1 className="text-3xl font-bold text-center mt-5 mb-10">
+        <h1 className='text-3xl font-bold text-center mt-2 mb-10'>
           Exam Lists
         </h1>
         {data?.length > 0 ? (
@@ -38,37 +38,37 @@ function ExamPage() {
               return (
                 <div
                   key={`eid${eid}`}
-                  className="bg-yellow-100 relative p-4 rounded-md my-10 hover:bg-yellow-200/80 transition-colors"
+                  className='bg-secondary-main bg-opacity-70 relative p-4 rounded-md my-10 hover:bg-opacity-100 duration-500 transition-all'
                 >
-                  <p className="font-bold">{exam?.name}</p>
-                  <p className="font-semibold">
+                  <p className='font-bold'>{exam?.name}</p>
+                  <p className='font-semibold'>
                     {exam?.topic}
-                    <span className="uppercase text-sm">
-                      ({exam?.category || "quiz"})
+                    <span className='uppercase text-sm'>
+                      ({exam?.category || 'quiz'})
                     </span>
                   </p>
-                  <span className="absolute top-2 right-2 text-red-500 font-semibold">
+                  <span className='absolute top-2 right-2 text-red-500 font-semibold'>
                     Total Mark: {exam?.totalMarks}
                   </span>
 
                   <p>Exam Starting time: {showTime(startTime)}</p>
                   <p>Exam Ending time: {showTime(endTime)}</p>
 
-                  <div className="grid grid-cols-1 mt-4">
+                  <div className='grid grid-cols-1 mt-4'>
                     {startTime < curTime.getTime() ? (
                       endTime > curTime.getTime() ? (
                         <button
-                          type="button"
-                          className="bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2"
+                          type='button'
+                          className='bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2'
                           onClick={() => {
                             let isConfirm = confirm(
-                              "Are you ready to take the exam?"
+                              'Are you ready to take the exam?'
                             );
                             if (isConfirm) {
                               navigate(
-                                exam?.category === "quiz"
+                                exam?.category === 'quiz'
                                   ? `quiz/${exam?.id}`
-                                  : exam?.category === "written"
+                                  : exam?.category === 'written'
                                   ? `written/${exam?.id}`
                                   : `quiz/${exam?.id}`
                               );
@@ -78,10 +78,10 @@ function ExamPage() {
                           Take Exam
                         </button>
                       ) : exam?.isFinalClosed ? (
-                        <div className="grid grid-cols-2">
+                        <div className='grid grid-cols-2'>
                           <button
-                            type="button"
-                            className="bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2"
+                            type='button'
+                            className='bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2'
                             onClick={() => {
                               navigate(`viewQuestion/${exam?.id}`);
                             }}
@@ -89,8 +89,8 @@ function ExamPage() {
                             See Question
                           </button>
                           <button
-                            type="button"
-                            className="bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2"
+                            type='button'
+                            className='bg-slate-950 text-yellow-300 hover:bg-slate-600 transition-colors rounded-full px-3 py-1 m-2'
                             onClick={() => {
                               navigate(`viewResult/${exam?.id}`);
                             }}
@@ -100,8 +100,8 @@ function ExamPage() {
                         </div>
                       ) : (
                         <button
-                          type="button"
-                          className="bg-slate-950 text-rose-300 rounded-full px-3 py-1 m-2 opacity-50 pointer-events-none"
+                          type='button'
+                          className='bg-slate-950 text-rose-300 rounded-full px-3 py-1 m-2 opacity-50 pointer-events-none'
                           disabled={true}
                         >
                           Pending
@@ -113,7 +113,7 @@ function ExamPage() {
               );
             })
         ) : (
-          <div className="text-rose-600 font-semibold">
+          <div className='text-rose-600 font-semibold'>
             No Exam has been created in this course.
           </div>
         )}
@@ -138,22 +138,22 @@ function checkHours(hour) {
   if (hour == 0) {
     return {
       time: 12,
-      format: "AM",
+      format: 'AM',
     };
   } else if (hour > 0 && hour <= 12) {
     return {
       time: hour,
-      format: hour == 12 ? "PM" : "AM",
+      format: hour == 12 ? 'PM' : 'AM',
     };
   } else if (hour > 12 && hour <= 23) {
     return {
       time: hour - 12,
-      format: "PM",
+      format: 'PM',
     };
   } else
     return {
       time: 0,
-      format: "--",
+      format: '--',
     };
 }
 

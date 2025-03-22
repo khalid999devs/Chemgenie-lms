@@ -36,7 +36,7 @@ const Dashboard = () => {
         setProfileFetchTrigger,
       }}
     >
-      <div className='px-5 m-auto my-10 '>
+      <div className='m-auto my-10 mt-16 md:mt-12 '>
         <Header />
         <div className='grid md:grid-cols-[auto,1fr]'>
           <Nav />

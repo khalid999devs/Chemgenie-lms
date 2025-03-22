@@ -9,7 +9,8 @@ export default {
         Text: '#efefef',
         darkText: '#041139',
         primary: {
-          main: '#F1F1F6',
+          // main: '#FEFDFC',
+          main: '#FFFFFE',
           dark: '#d1d1ba',
         },
         onPrimary: {
@@ -23,6 +24,10 @@ export default {
       },
       screens: {
         '6xl': '1150px',
+      },
+      backgroundImage: {
+        'gradient-radial':
+          'linear-gradient(0deg, rgba(238,246,200,0.5823121484922094) 0%, rgba(237,233,213,0.7167659300048144) 50%, rgba(253,187,45,0.3) 100%)',
       },
     },
   },

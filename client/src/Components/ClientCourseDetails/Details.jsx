@@ -11,14 +11,14 @@ const Details = () => {
     return (
       <div>
         {/* course title........... */}
-        <h1 className='text-left text-4xl font-bold mb-10 '>
+        <h1 className='text-left text-3xl md:text-4xl font-bold mb-10 '>
           {courseInfo?.title}
         </h1>
         {/* course description- long.... */}
         <p className='text-left mb-10'>{courseInfo?.desc}</p>
         {/* schedule section */}
         <div className='flex flex-col gap-6 my-16 mb-8'>
-          <h4 className=' text-left text-xl border-l-4 border-secondary-dark px-5  flex items-center'>
+          <h4 className=' text-left text-base lg:text-xl border-l-4 border-secondary-dark px-5  flex items-center'>
             <AiOutlineSchedule className='inline-block text-4xl text-secondary-dark mr-5' />
             {/* this scehdule section is dynamic ................*/}
             Schedule: {courseInfo?.schedule}
@@ -34,7 +34,7 @@ const Details = () => {
         </div>
         {/* course component section */}
         <div className='mt-12'>
-          <h1 className='font-bold text-left text-4xl text-blue-900 mb-5'>
+          <h1 className='font-bold text-left text-2xl text-secondary-dark mb-5'>
             Course components
           </h1>{' '}
           <hr className='mb-2 ' />

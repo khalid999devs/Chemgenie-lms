@@ -1,6 +1,6 @@
 const IconNumCard = ({ icon, number, text }) => {
   return (
-    <div className='flex flex-row items-center lg:flex-col gap-4 border rounded-md p-2 px-4 lg:p-5 w-full lg:max-w-[300px] '>
+    <div className='flex flex-row items-center bg-primary-main shadow-sm lg:flex-col gap-4 border rounded-xl transition-all duration-500 hover:shadow-md p-2 px-4 lg:p-5 w-full lg:max-w-[300px] '>
       <div className='w-[45px] h-[45px] rounded-full bg-onPrimary-light p-2 text-onPrimary-main text-xl grid place-items-center'>
         {icon}
       </div>

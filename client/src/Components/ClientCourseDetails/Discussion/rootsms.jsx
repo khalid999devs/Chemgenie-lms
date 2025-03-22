@@ -52,7 +52,7 @@ const RootSms = React.forwardRef(
     };
     return (
       <div
-        className='flex-1 overflow-y-scroll pr-2'
+        className='flex-1 overflow-y-scroll px-3'
         ref={containerRef}
         onScroll={checkScroll}
       >

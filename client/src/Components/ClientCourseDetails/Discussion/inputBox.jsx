@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { MdClose, MdPhoto, MdSend } from 'react-icons/md';
 import { FaFileAlt } from 'react-icons/fa';
 import { client } from '../../../axios/discussion';
+import { IoMdClose } from 'react-icons/io';
+
 function InputBox({
   replyId,
   setReplyId,
@@ -68,7 +70,7 @@ function InputBox({
   }
 
   return (
-    <div className='flex flex-col items-start space-x-2 w-full px-5 pt-3 text-center relative h-fit tracking-wide text-sm rounded-xl font-normal'>
+    <div className='flex flex-col items-start px-2 w-full md:px-4 pt-3 text-center relative h-fit tracking-wide text-sm rounded-xl font-normal'>
       {/* photo viewer */}
       <div
         className={`w-full p-2 bg-white ring-1 ring-blue-500/70 mb-5 rounded-xl flex flex-wrap ${
@@ -120,7 +122,7 @@ function InputBox({
           }`}
         >
           <textarea
-            className={`w-4/5 flex-grow outline-none border-0 bg-transparent placeholder-slate-200 placeholder:opacity-50 font-medium`}
+            className={`w-4/5 flex-grow outline-none border-0 bg-transparent placeholder-slate-200 placeholder:opacity-50 font-medium px-2`}
             value={inputValue}
             rows={rows}
             onChange={handleInputChange}
@@ -160,17 +162,22 @@ function InputBox({
       </form>
       {/* reply box */}
       {replyId >= 0 ? (
-        <div
-          className='w-1/3 absolute left-5 border-l-4 border-l-root_bluish/70 rounded-lg bottom-full backdrop-blur-md z-0 bg-blue-500/50 bg-opacity-50 dark:text-white min-h-[2rem] text-left p-2 text-xs text-opacity-20 overflow-hidden max-h-20 break-words truncate'
-          onClick={() => {
-            setReplyId(-1);
-          }}
-        >
-          <span className='font-bold'>
-            {JSON.parse(replyMsg?.user ? replyMsg?.user : '')?.fullName}
-          </span>{' '}
-          <br />
-          <span className='font-extralight '>{replyMsg?.question}</span>
+        <div className='max-w-[80%] w-max md:max-w-[60%] md:w-min absolute left-5 border-l-4 border-l-root_bluish/70 rounded-lg bottom-full backdrop-blur-md z-0 bg-blue-500/60 bg-opacity-50 dark:text-white min-h-[2rem] text-left p-2 text-xs text-opacity-20 overflow-hidden max-h-20 break-words truncate flex gap-10 justify-between items-center'>
+          <div className='h-full w-full flex flex-col'>
+            <span className='font-bold'>
+              {JSON.parse(replyMsg?.user ? replyMsg?.user : '')?.fullName}
+            </span>{' '}
+            <br />
+            <span className='font-extralight'>{replyMsg?.question}</span>
+          </div>
+          <div
+            onClick={() => {
+              setReplyId(-1);
+            }}
+            className='bg-onPrimary-main inline p-0.5 rounded-md cursor-pointer opacity-75 transition-all duration-300 hover:opacity-100'
+          >
+            <IoMdClose className='text-xl' />
+          </div>
         </div>
       ) : null}
     </div>

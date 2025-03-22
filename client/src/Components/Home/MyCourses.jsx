@@ -14,26 +14,24 @@ const MyCourses = ({ user }) => {
   useEffect(() => {
     fetchCourses(setCourses);
   }, []);
+
   return (
     <div
       id='courses'
-      className='mt-[100px] grid place-items-center w-full m-auto gap-5 px-3'
+      className='mt-[100px] grid place-items-center w-full m-auto gap-5'
     >
-      <h1 className='inline-flex font-bold text-4xl md:text-5xl pb-2'>
-        Explore Courses &nbsp; <BiBookReader className='text-cyan-500 ' />
+      <h1 className='inline-flex items-center text-onPrimary-main font-bold text-[2.4rem] pb-2'>
+        <span className='underline underline-offset-4 text-secondary-main'>
+          <span className='text-onPrimary-main'>Explore</span>
+        </span>
+        &nbsp;Courses &nbsp; <BiBookReader className='text-secondary-main ' />
       </h1>
-      <div className='flex flex-wrap flex-row m-auto items-center justify-center px-2 py-6 gap-6 w-full'>
+      <div className='flex flex-wrap flex-row m-auto items-center justify-center py-6 gap-5 w-full'>
         {courses
-          .sort((a, b) => {
-            let x = new Date(a.createdAt).getTime();
-            let y = new Date(b.createdAt).getTime();
-
-            if (x > y) return -1;
-            else if (x < y) return 1;
-            else if (x == y) return 0;
-          })
+          .reverse()
+          .slice(0, 3)
           .map((course, value) => {
-            let hasEnrolled = user?.enrolledCourses?.findIndex(
+            const hasEnrolled = user?.enrolledCourses?.findIndex(
               (ele) => ele?.courseId === course?.id
             );
             if (value < 5)
@@ -41,7 +39,7 @@ const MyCourses = ({ user }) => {
                 <div key={value}>
                   <Coursecard
                     cardDetails={course}
-                    classes={'!h-full'}
+                    // classes={'!h-full'}
                     onClick={(_) => {
                       if (hasEnrolled === -1) navigate(`/courses/${course.id}`);
                       else navigate(`/courses/onClientReq/${course.id}`);

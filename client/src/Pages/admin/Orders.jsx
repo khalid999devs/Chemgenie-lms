@@ -69,28 +69,70 @@ const Orders = () => {
       });
   };
 
+  const handleRemoveStudent = (
+    clientId,
+    courseId,
+    invoiceNo,
+    orderId,
+    setRemoveLoading
+  ) => {
+    setRemoveLoading(true);
+    const userValidate = prompt(
+      `Please type the number " ${orderId} " below and press 'ok' to delete it: `
+    );
+    if (Number(userValidate) === Number(orderId)) {
+      axios
+        .post(
+          reqs.REMOVE_STUDENT_FROM_COURSE,
+          { clientId, courseId, invoiceNo, orderId },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.data.succeed) {
+            setVerifiedOrders((prevOrders) =>
+              prevOrders.filter((order) => order.id !== orderId)
+            );
+          }
+          setRemoveLoading(false);
+        })
+        .catch((err) => {
+          alert(
+            'Error: ',
+            err.response?.data.msg ||
+              'Some unexpected error happened during the removal!'
+          );
+          setRemoveLoading(false);
+        });
+    } else {
+      alert('Please Enter the correct number');
+      setRemoveLoading(false);
+    }
+  };
+
   return (
-    <div className='px-5 flex flex-col min-h-screen gap-4'>
+    <div className='px-5 flex w-full flex-col min-h-screen gap-4'>
       <h2 className='text-center text-darkText text-4xl font-semibold mb-6'>
         Enrolls and Orders
       </h2>
       {/* mode buttons */}
       <div className='flex gap-3 mb-2'>
         <PrimaryButton
-          classes={`!py-2 ${mode === 'pending'
+          classes={`!py-2 ${
+            mode === 'pending'
               ? 'bg-onPrimary-main text-primary-main'
               : 'bg-primary-main text-onPrimary-main'
-            }`}
+          }`}
           text={'Pending'}
           onClick={() => {
             navigate('/abs-admin/orders/pending');
           }}
         />
         <PrimaryButton
-          classes={`!py-2 ${mode === 'verified'
+          classes={`!py-2 ${
+            mode === 'verified'
               ? 'bg-onPrimary-main text-primary-main'
               : 'bg-primary-main text-onPrimary-main'
-            }`}
+          }`}
           text={'Verified'}
           onClick={() => {
             navigate('/abs-admin/orders/verified');
@@ -98,83 +140,92 @@ const Orders = () => {
         />
       </div>
       {/* sutdent lists */}
-      <div className='flex justify-center overflow-y-scroll min-w-lg max-w-6xl w-full mx-auto border border-root_bluish'>
+      <div className='flex justify-center overflow-y-scroll min-w-lg w-full mx-auto border border-root_bluish'>
         <table className='w-full bg-slate-300 text-darkText shadow-md cursor-default select-text'>
           <thead className='w-full'>
             <tr className='text-darkText text-md text-left'>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100 text-center'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4bg-gray-100 text-center'>
                 Sl No.
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Name
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Email
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Phone
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Course Name
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Bkash no.
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Transaction Id
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 Status
               </th>
-              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-10 bg-gray-100'>
+              <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
                 {mode === 'pending' ? 'Enrolled date' : 'Verified Date'}
               </th>
+              {mode === 'verified' && (
+                <th className='sticky top-0 left-0  shadow-root_bluish/20 shadow-lg  py-2 px-4 bg-gray-100'>
+                  Control
+                </th>
+              )}
             </tr>
           </thead>
           <tbody className='overflow-y-scroll '>
             <>
               {mode === 'pending'
                 ? pendingOrders.map((order, key) => {
-                  return (
-                    <OrderList
-                      key={key}
-                      id={key + 1}
-                      name={order.paymentInfo?.userInfo?.fullName}
-                      email={order.paymentInfo?.userInfo?.email}
-                      phone={order.paymentInfo?.phone}
-                      courseName={order.paymentInfo?.courseTitle}
-                      bkashNo={order.paymentInfo?.bkashData?.bkashNo}
-                      transactionId={
-                        order.paymentInfo?.bkashData?.transactionId
-                      }
-                      date={order.paymentInfo?.enrollTime}
-                      mode={mode}
-                      handleVerifyClick={handleVerifyClick}
-                      clientId={order.clientId}
-                      courseId={order.courseId}
-                    />
-                  );
-                })
+                    return (
+                      <OrderList
+                        key={key}
+                        sl={key + 1}
+                        id={order.id}
+                        name={order.paymentInfo?.userInfo?.fullName}
+                        email={order.paymentInfo?.userInfo?.email}
+                        phone={order.paymentInfo?.phone}
+                        courseName={order.paymentInfo?.courseTitle}
+                        bkashNo={order.paymentInfo?.bkashData?.bkashNo}
+                        transactionId={
+                          order.paymentInfo?.bkashData?.transactionId
+                        }
+                        date={order.paymentInfo?.enrollTime}
+                        mode={mode}
+                        handleVerifyClick={handleVerifyClick}
+                        clientId={order.clientId}
+                        courseId={order.courseId}
+                      />
+                    );
+                  })
                 : verifiedOrders.map((order, key) => {
-                  return (
-                    <OrderList
-                      key={key}
-                      id={key + 1}
-                      name={order.paymentInfo?.userInfo?.fullName}
-                      email={order.paymentInfo?.userInfo?.email}
-                      phone={order.paymentInfo?.phone}
-                      courseName={order.paymentInfo?.courseTitle}
-                      bkashNo={order.paymentInfo?.bkashData?.bkashNo}
-                      transactionId={
-                        order.paymentInfo?.bkashData?.transactionId
-                      }
-                      date={order.createdDate}
-                      mode={mode}
-                      clientId={order.clientId}
-                      courseId={order.courseId}
-                    />
-                  );
-                })}
+                    return (
+                      <OrderList
+                        key={key}
+                        sl={key + 1}
+                        id={order.id}
+                        name={order.paymentInfo?.userInfo?.fullName}
+                        email={order.paymentInfo?.userInfo?.email}
+                        phone={order.paymentInfo?.phone}
+                        courseName={order.paymentInfo?.courseTitle}
+                        bkashNo={order.paymentInfo?.bkashData?.bkashNo}
+                        transactionId={
+                          order.paymentInfo?.bkashData?.transactionId
+                        }
+                        date={order.createdDate}
+                        mode={mode}
+                        clientId={order.clientId}
+                        courseId={order.courseId}
+                        invoiceNo={order.invoiceNo}
+                        handleRemoveStudent={handleRemoveStudent}
+                      />
+                    );
+                  })}
             </>
           </tbody>
         </table>
@@ -187,6 +238,7 @@ export default Orders;
 
 const OrderList = ({
   id,
+  sl,
   avatar,
   name,
   email,
@@ -199,12 +251,14 @@ const OrderList = ({
   handleVerifyClick,
   clientId,
   courseId,
+  handleRemoveStudent,
+  invoiceNo,
 }) => {
   const [loading, setLoading] = useState(false);
 
   return (
     <tr
-      key={id}
+      key={sl}
       className={`hover:bg-gray-500/20 h-fit row-span-1 transition-colors duration-100 ease-in border-b relative`}
     >
       {loading && (
@@ -217,7 +271,7 @@ const OrderList = ({
         </div>
       )}
 
-      <td className='py-2 text-center'>{id + 1}</td>
+      <td className='py-2 text-center'>{sl}</td>
       <td className='py-2 text-center font-semibold '>
         {avatar && (
           <img
@@ -283,6 +337,19 @@ const OrderList = ({
       <td className='p-2 text-justify'>
         {new Date(Number(date)).toDateString()}
       </td>
+
+      {mode === 'verified' && (
+        <td className='p-2 text-justify'>
+          <PrimaryButton
+            text={'remove'}
+            classes={`!bg-onPrimary-main text-primary-main !py-2 !px-4`}
+            textClasses={`!text-xs`}
+            onClick={() =>
+              handleRemoveStudent(clientId, courseId, invoiceNo, id, setLoading)
+            }
+          />
+        </td>
+      )}
     </tr>
   );
 };

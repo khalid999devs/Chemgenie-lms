@@ -48,13 +48,13 @@ const ContactPage = () => {
   }
 
   return (
-    <div className='relative rounded-2xl bg-gradient-to-tr from-primary-main to-onPrimary-main grid grid-cols-1 md:grid-cols-2 justify-between gap-10 p-10 shadow-2xl inset-y-5 shadow-primary-dark overflow-hidden z-20'>
+    <div className='relative rounded-2xl bg-gradient-radial grid grid-cols-1 md:grid-cols-2 justify-between gap-10 p-4 pb-20 md:p-10 shadow-md mb-40 mt-10 inset-y-5 shadow-primary-dark overflow-hidden z-20'>
       {/* absolute bg */}
       <div className='absolute rounded-full w-[400px] h-[400px] -rotate-45 left-12 top-2/3 -z-10 bg-gradient-to-t from-yellow-400/60 to-orange-700 anime-rot'></div>
 
       {/* top-left panel */}
       <div className='flex justify-center items-start flex-col'>
-        <p className='text-white font-bold capitalize text-4xl underline border ring-4 ring-yellow-500 p-2'>
+        <p className='font-bold capitalize text-4xl underline underline-offset-4 border text-onPrimary-main p-2'>
           Contact Us
         </p>
         <p className='my-5'>
@@ -63,7 +63,7 @@ const ContactPage = () => {
         </p>
       </div>
       {/* right-bottom panel */}
-      <div className='rounded-2xl bg-white shadow-2xl shadow-slate-900/50 p-7'>
+      <div className='rounded-2xl bg-white shadow-xs shadow-slate-900/50 p-7'>
         <h2 className='text-gray-700 font-semibold text-xl'>
           Send us a Message
         </h2>
@@ -143,7 +143,7 @@ const ContactPage = () => {
             </div>
           ) : null}
           <button
-            className='w-full bg-yellow-400 text-white rounded-full py-3 text-base hover:shadow-lg hover:shadow-yellow-400/70 transition-all font-semibold'
+            className='w-full bg-secondary-main  rounded-full py-3 text-base hover:shadow-lg transition-all text-onPrimary-main font-semibold'
             type='submit'
             disabled={load}
           >

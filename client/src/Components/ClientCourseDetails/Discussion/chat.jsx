@@ -27,9 +27,17 @@ function ChatBox({ isAdmin }) {
     });
   }, [ownInput]);
 
+  useEffect(() => {
+    document.body.style.overflowY = 'hidden';
+
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, []);
+
   return (
-    <div className='bg-trans_bluish/0 rounded-md py-1 max-w-6xl  mx-auto h-[65vh] overflow-y-hidden'>
-      <div className='px-4 pb-0 flex flex-col h-full w-auto'>
+    <div className='bg-trans_bluish/0 rounded-md py-1 max-w-6xl  mx-auto h-[80vh] fixed left-1/2 -translate-x-1/2 bottom-0 w-full overflow-y-hidden'>
+      <div className='md:px-4 pb-0 flex flex-col h-full w-auto'>
         <RootSms
           containerRef={chatContainerRef}
           setReplyId={setReplyId}

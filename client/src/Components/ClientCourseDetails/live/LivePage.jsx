@@ -1,6 +1,6 @@
 function ZoomLink({ val, zoomInfo }) {
   return (
-    <div className='dark:text-darkText p-2 m-auto mb-4 max-w-[400px] w-full shadow-md'>
+    <div className='dark:text-darkText bg-primary-main rounded-xl p-2 m-auto mb-4 max-w-[400px] w-full shadow-md'>
       <h2 className='text-center font-bold text-2xl text-secondary-dark'>
         Zoom Live class
       </h2>

@@ -15,11 +15,11 @@ const {
   UnauthorizedError,
   CustomAPIError,
 } = require('../errors');
-const { redis } = require('../utils/redis');
 const mailer = require('../utils/sendMail');
-const deleteFile = require('../utils/deleteFile');
 const { Op } = require('sequelize');
 const sendSMS = require('../utils/sendSMS');
+const fs = require('fs');
+const path = require('path');
 
 // const SSLCommerzPayment = require('sslcommerz-lts');
 // const store_id = process.env.SSLCMZ_STORE_ID;
@@ -385,7 +385,7 @@ const confirmSingleOrder = async (req, res) => {
     redVidLockState: JSON.stringify(redVidLockState),
     recVidDoneState: JSON.stringify(recVidDoneState),
     recVidPlTimeState: JSON.stringify(recVidPlTimeState),
-    currentPlVidId: allRecordedClasses[0].id || 'next',
+    currentPlVidId: allRecordedClasses[0]?.id || 'next',
   });
   course.purchased = course.purchased + 1;
   await course.save();
@@ -466,6 +466,60 @@ const clientInvoices = async (req, res) => {
   });
 };
 
+const removeStudentFromCourse = async (req, res) => {
+  const { courseId, clientId, invoiceNo, orderId } = req.body;
+
+  if (!courseId || !clientId || !invoiceNo || !orderId) {
+    throw new BadRequestError(
+      'CourseId, ClientId and InvoiceNo must be provided'
+    );
+  }
+
+  const targetClientCourse = await clientcourses.findOne({
+    where: { courseId, clientId },
+  });
+  if (!targetClientCourse) {
+    throw new UnauthorizedError(
+      'You cannot remove this student, wrong info provided!'
+    );
+  }
+
+  const targetOrder = await orders.findOne({
+    where: { id: orderId },
+  });
+  if (!targetOrder) {
+    throw new UnauthenticatedError(
+      'You cannot remove this student, wrong info provided!'
+    );
+  }
+
+  const removedStudentInfo = {
+    orderId,
+    courseId,
+    clientId,
+    invoiceNo,
+    removedAt: new Date().toISOString(),
+  };
+
+  const logPath = path.join(__dirname, '..', 'logs', 'removed', 'students.txt');
+  const logEntry = JSON.stringify(removedStudentInfo) + ',\n';
+
+  fs.mkdir(path.dirname(logPath), { recursive: true }, (err) => {
+    if (err) console.error('Error creating log directory:', err);
+    fs.appendFile(logPath, logEntry, (err) => {
+      if (err) console.error('Error writing to log file:', err);
+    });
+  });
+
+  await targetClientCourse.destroy();
+  await targetOrder.destroy();
+
+  res.json({
+    succeed: true,
+    msg: 'Successfully removed the student from the course!',
+  });
+};
+
 module.exports = {
   createOrder,
   getAllVerifiedOrders,
@@ -477,4 +531,5 @@ module.exports = {
   getAllPendingOrders,
   confirmSingleOrder,
   getAllClientBasedOrders,
+  removeStudentFromCourse,
 };

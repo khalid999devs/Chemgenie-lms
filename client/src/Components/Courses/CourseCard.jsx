@@ -1,65 +1,56 @@
 import { FaArrowRight } from 'react-icons/fa6';
 import Star from './Star';
 import { reqImgWrapper } from '../../assets/requests';
+
 const Coursecard = ({
   cardDetails: { title, description, price, id, ratings, image },
   onClick,
   hasEnrolled,
   classes,
 }) => {
-  // console.log(image);
+  const descriptionLengthLimit = 100;
   return (
-    <>
-      <div
-        className={
-          'max-w-[350px] w-full border mx-auto rounded-lg shadow bg-onPrimary-main hover:scale-[101%] duration-200 transition-transform cursor-pointer table-cell ' +
-          classes
-        }
-        onClick={onClick}
-      >
-        <img
-          className='rounded-t-lg aspect-auto object-cover h-[200px] w-full'
-          src={reqImgWrapper(image)}
-          alt='product image'
-        />
+    <div
+      className={`w-[370px] h-[455px] border mx-auto rounded-xl shadow-lg bg-onPrimary-main hover:scale-[101%] duration-500 transition-transform cursor-pointer flex flex-col overflow-hidden ${classes}`}
+      onClick={onClick}
+    >
+      <img
+        className='w-full h-[200px] object-cover'
+        src={reqImgWrapper(image)}
+        alt='course image'
+      />
 
-        <div className='px-5 pb-5 pt-3'>
-          <h5 className='text-xl text-left font-bold tracking-tight text-white'>
-            {title || 'Lorem ipsum dolor sit amet. lorem10'}
-          </h5>
+      <div className='p-5 flex flex-col flex-grow text-Text'>
+        <h5 className='text-xl font-semibold'>{title || 'Course Title'}</h5>
 
-          <p className='text-left text-slate-400 min-h-[70px] mb-4 h-auto text-[.92rem] mt-1 text-ellipsis line-clamp-3'>
-            {description ||
-              `Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-            voluptas culpa quos,`}
-          </p>
+        <p className='text-primary-dark text-sm mt-3 line-clamp-3 flex-grow'>
+          {(description?.length > descriptionLengthLimit
+            ? description.slice(0, descriptionLengthLimit) + '...'
+            : description) || 'A brief description of the course goes here...'}
+        </p>
 
-          {/* stars */}
-          <div className='flex items-center mt-2.5 mb-5'>
-            {Array.from({ length: parseInt(ratings) }, (_, i) => (
-              <Star key={i} />
-            ))}
-            {ratings && (
-              <span className='  text-xs font-semibold mr-2 px-2.5 py-0.5 rounded bg-blue-200 text-blue-800 ml-3'>
-                {ratings}.0
-              </span>
-            )}
-          </div>
-          <div className='flex items-center justify-between'>
-            <span className='text-xl sm:text-2xl font-bold  text-white mr-10 '>
-              {price || `2000`} TK
+        {/* Ratings */}
+        <div className='flex items-center mt-4'>
+          {Array.from({ length: parseInt(ratings) || 0 }, (_, i) => (
+            <Star key={i} />
+          ))}
+          {ratings && (
+            <span className='text-xs font-semibold ml-3 px-3 py-1 rounded-full bg-secondary-main text-darkText'>
+              {ratings}.0
             </span>
-            <p
-              // to={`/courses/${id}`}
-              className='text-black  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-secondary-main opacity-80 hover:opacity-100 hover:text-black flex justify-center items-center gap-1'
-            >
-              <span>{hasEnrolled ? 'Enter Course' : 'See details'}</span>
-              <FaArrowRight className='pl-.5 inline-block' />{' '}
-            </p>
-          </div>
+          )}
+        </div>
+
+        {/* Price & Button */}
+        <div className='flex items-center justify-between mt-6'>
+          <span className='text-xl font-bold'>{price || '2000'} TK</span>
+          <button className='text-darkText font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary-main opacity-90 hover:opacity-100 flex items-center gap-2'>
+            <span>{hasEnrolled ? 'Enter Course' : 'See details'}</span>
+            <FaArrowRight />
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

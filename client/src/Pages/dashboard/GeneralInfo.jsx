@@ -25,8 +25,10 @@ const GeneralInfo = () => {
       </div>
 
       <div className='flex flex-col gap-5 mb-6 w-full'>
-        <h1 className='text-xl font-medium '>In Progress Courses</h1>
-        <div className='flex flex-row flex-wrap gap-4 w-full'>
+        <h1 className='text-xl font-medium mt-4 sm:mt-0'>
+          In Progress Courses
+        </h1>
+        <div className='flex flex-row flex-wrap gap-4 justify-center sm:justify-start w-full'>
           {userProfile?.clientcourses?.length > 0 ? (
             userProfile?.clientcourses?.map((course, value) => {
               if (course?.id !== null)

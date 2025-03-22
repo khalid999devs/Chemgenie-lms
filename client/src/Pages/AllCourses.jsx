@@ -14,8 +14,12 @@ const AllCourses = () => {
     fetchCourses(setCourses, setLoading);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [courses]);
+
   return (
-    <div className='flex flex-row mx-auto items-center justify-center md:justify-start w-full flex-wrap py-10 mt-8 px-3 gap-6'>
+    <div className='flex flex-row mx-auto items-center justify-center md:justify-start w-full flex-wrap py-10 mt-8 gap-5'>
       {courses.map((course, value) => {
         let hasEnrolled = user?.enrolledCourses?.findIndex(
           (ele) => ele?.courseId === course?.id

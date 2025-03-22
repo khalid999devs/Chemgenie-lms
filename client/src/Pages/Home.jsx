@@ -7,7 +7,7 @@ const Home = () => {
   const { user } = ContextConsumer();
 
   return (
-    <div className='h-auto py-12'>
+    <div className='h-auto pb-24'>
       <Hero />
       <InfoCards />
       <MyCourses user={user} />

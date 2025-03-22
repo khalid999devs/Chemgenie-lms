@@ -19,6 +19,11 @@ const CourseClientdetails = () => {
   useEffect(() => {
     clientFCourse(cid, setCourse);
   }, [cid]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [courseInfo]);
+
   if (!user?.enrolledCourses?.find(() => ({ courseId: cid })))
     return (
       <div className='min-h-screen'>
@@ -39,7 +44,7 @@ const CourseClientdetails = () => {
     );
   return (
     <CourseContext.Provider value={{ courseInfo, setCourse }}>
-      <div className='px-3 w-full m-auto my-10 relative'>
+      <div className='w-full m-auto mb-20 mt-6 relative'>
         {!user?.enrolledCourses.find(() => ({ courseId: cid })) && (
           <FixedCard
             cardDetails={{

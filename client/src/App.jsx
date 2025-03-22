@@ -152,11 +152,14 @@ function App() {
       </Helmet>
 
       {/* main web contents */}
-      <div className='w-full min-h-screen bg-primary-main'>
+      <div className='w-full min-h-screen'>
+        <div className='fixed w-screen h-screen top-0 left-0 bg-[url(/bg.png)] -z-10 bg-cover opacity-[10%]'></div>
         <Navbar />
 
-        <div className='m-auto max-w-6xl w-[100%]'>
-          <Outlet />
+        <div className='w-full min-h-screen px-3'>
+          <div className='m-auto max-w-6xl pt-12 w-[100%]'>
+            <Outlet />
+          </div>
         </div>
 
         <FooterMain />

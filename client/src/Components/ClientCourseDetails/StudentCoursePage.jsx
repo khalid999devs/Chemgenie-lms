@@ -22,7 +22,7 @@ const StudentCoursePage = () => {
         <title>{courseInfo?.title + ' | ChemGenie'}</title>
       </Helmet>
       <nav
-        className='bg-primary-main rounded-b-lg p-2 border border-t-transparent border-onPrimary-main shadow-lg shadow-onPrimary-main/20 my-8
+        className='bg-primary-main rounded-b-lg p-2 py-5 border border-t-transparent shadow-sm shadow-onPrimary-main/20 my-8 mt-0 relative z-10
       '
       >
         <ul className='capitalize flex gap-5 justify-center clientDash'>

@@ -45,7 +45,7 @@ const MobileNav = ({ isMobOpen, setIsMobOpen, user, setUser }) => {
               </NavLink>
             );
           })}
-          {user.username && (
+          {user?.username && (
             <NavLink
               to={`/dashboard`}
               className={({ isActive, isPending }) =>

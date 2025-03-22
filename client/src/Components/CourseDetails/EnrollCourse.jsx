@@ -205,7 +205,10 @@ const EnrollCourse = () => {
                         >
                           {item}
                         </span>
-                      ))} <span className='text-pink-400 font-semibold'>{"[bKash]"}</span>
+                      ))}{' '}
+                      <span className='text-pink-400 font-semibold'>
+                        {'[bKash]'}
+                      </span>
                     </li>
                     <li>Then copy the bkash transaction ID</li>
                     <li>

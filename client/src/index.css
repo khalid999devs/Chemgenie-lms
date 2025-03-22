@@ -161,3 +161,7 @@ form.gallery-form section input {
 .glass-box {
   @apply rounded-md ring-2 ring-slate-400 bg-slate-200/50 text-slate-600 px-3 py-1 my-1 dark:bg-slate-700/50 dark:text-slate-200;
 }
+
+img {
+  user-select: none;
+}

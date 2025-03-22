@@ -11,11 +11,17 @@ const Coursedetails = () => {
     fetchCourse(id, setData);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [data]);
+
   return (
-    <div className='px-3 w-full m-auto my-10 relative'>
+    <div className='w-full m-auto my-10 relative'>
       <FixedCard
         cardDetails={{
           id: data?.id,
+          title: data?.title,
+          desc: data?.description,
           img: data?.image,
           rating: data?.ratings,
           price: data?.price,

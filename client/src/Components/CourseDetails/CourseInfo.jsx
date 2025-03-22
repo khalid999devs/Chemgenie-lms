@@ -18,8 +18,7 @@ const CourseInfo = ({
   },
 }) => {
   return (
-    <div className='left-side md:w-3/5'>
-      {/* Course SEO */}
+    <div className='left-side mt-12 md:mt-20 pb-14 md:w-[56%]'>
       <Helmet>
         {/* Open Graph (OG) meta tags */}
         <meta
@@ -50,40 +49,38 @@ const CourseInfo = ({
     afnan,bd chemistry,Chemistry, Chemistry Giant,Chemistry Classes, Chemistry Notes, Online MCQs, Written Model Tests, ZOOM Live Solutions, FB Live Solutions, Chemistry Education, Study Tips, Learning Chemistry, Interactive Chemistry Classes, Chemistry Resources`}
         />
       </Helmet>
-      {/* course title........... */}
-      <h1 className='text-left text-4xl font-bold mb-10 '>
+      <h1 className='hidden md:block text-left text-[2.6rem] font-bold mb-6 '>
         {courseInfo.title}
       </h1>
-      {/* course description- long.... */}
       <p className='text-left mb-10'>{courseInfo.desc}</p>
-      {/* schedule section */}
-      <div className='flex flex-col gap-6 my-16'>
+      <div className='flex flex-col gap-6 mb-16 mt-14 md:mt-16'>
         <h4 className=' text-left text-xl border-l-4 border-secondary-dark px-5  flex items-center'>
           <AiOutlineSchedule className='inline-block text-4xl text-secondary-dark mr-5' />
-          {/* this scehdule section is dynamic ................*/}
           Schedule: {courseInfo.schedule}
         </h4>
-        {/* demo video section */}
+
         <h4 className=' text-left text-xl border-l-4 border-violet-400 px-5 flex items-center '>
-          <PiVideoBold className='inline-block text-4xl text-violet-400 mr-5' />
+          <PiVideoBold className='inline-block text-4xl text-onPrimary-main opacity-75 mr-5' />
           Free demo class
-          {/* demo class link will be provided here......... */}
           <a
             href={courseInfo.demoLink}
             target='_blank'
-            className='px-11 py-2.5 ml-6 bg-stone-200 hover:bg-stone-300 hover:outline-none hover:text-black text-black   font-medium rounded-lg text-base text-center  '
+            className='px-11 py-2.5 ml-6 bg-primary-dark outline-none opacity-80 transition-all duration-500 hover:opacity-100 hover:outline-none hover:text-black text-black  font-medium rounded-lg text-base text-center  '
           >
             Watch video <MdOutlineSlowMotionVideo className='inline-block' />{' '}
           </a>
         </h4>
       </div>
-      {/* course component section */}
       <div>
-        <h1 className='font-bold text-left text-4xl text-blue-900 mb-5'>
-          Course components
+        <h1 className='font-bold text-left text-4xl text-onPrimary-main mb-5'>
+          <span className='text-yellow-500'>Course</span>{' '}
+          <span className='text-secondary-main underline underline-offset-4'>
+            {' '}
+            <span className='text-onPrimary-main'>components</span>
+          </span>
         </h1>{' '}
-        <hr className='mb-10 ' />
-        <div className='border-gray-700 bg-onPrimary-main rounded-lg p-5 mb-10 flex flex-col gap-1'>
+        <hr className='mb-5 ' />
+        <div className='border-gray-700 bg-onPrimary-main rounded-lg p-5 mb-16 flex flex-col gap-2 '>
           <h4 className='text-white text-left'>
             <HiOutlineAcademicCap className='inline-block text-3xl text-yellow-300' />{' '}
             Live classes & recorded previous classes.
@@ -103,11 +100,11 @@ const CourseInfo = ({
         </div>
       </div>
       {/* instructor section ..................*/}
-      <h1 className='font-bold text-left text-4xl text-blue-900 mb-5'>
+      <h1 className='font-bold text-left text-4xl text-onPrimary-main mb-5'>
         Instructor
       </h1>{' '}
-      <hr className='mb-10' />
-      <div className='flex flex-col items-center border  rounded-lg shadow md:flex-row md:max-w-xl  border-gray-700 bg-onPrimary-main hover:bg-gray-700 mb-16'>
+      <hr className='mb-5' />
+      <div className='flex flex-col items-center border  rounded-lg shadow md:flex-row   border-gray-700 bg-onPrimary-main hover:bg-gray-700 mb-16'>
         <img
           className='w-24 h-24 m-5 rounded-full shadow-lg '
           src={'/Images/bannerPic.jpg'}

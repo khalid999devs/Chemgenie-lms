@@ -126,6 +126,8 @@ const reqs = {
   CONFIRM_SINGLE_ORDER_ADMIN: '/api/order/confirm-single-order',
   GET_ALL_CLIETN_BASED_ORDERS: '/api/order/client-orders',
 
+  REMOVE_STUDENT_FROM_COURSE: '/api/order/remove-student-from-course', //post
+
   PAYMENT_INIT: '/api/order/pay-init',
   GET_PENDING_ORDERS_ADMIN: '/api/order/pending-orders',
   GET_VERIFIED_ORDERS_ADMIN: '/api/order/verified-orders',

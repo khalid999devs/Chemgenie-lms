@@ -33,7 +33,7 @@ const Avatar = ({ user, logout }) => {
 
       <section
         id='tooltip'
-        className='rounded-md shadow-md overflow-hidden hidden opacity-0 absolute top-[100%] right-[-100%] md:right-0 max-w-[350px] w-max bg-secondary-main transition-opacity duration-500 z-50 '
+        className='rounded-md shadow-md overflow-hidden hidden opacity-0 absolute top-[100%] right-[-100%] md:right-0 max-w-[350px] w-max bg-secondary-main transition-opacity duration-500 z-50'
       >
         <div className='grid md:grid-cols-[1fr,1.5fr] '>
           <div className=' w-[100%] h-[70px] md:h-[100%]'>
@@ -47,7 +47,7 @@ const Avatar = ({ user, logout }) => {
               alt='welcome image'
             />
           </div>
-          <div className='flex flex-col gap-4 text-sm p-8 md:pt-6 md:p-1 md:pl-5 md:pb-8 font-medium'>
+          <div className='flex flex-col gap-3 text-sm p-8 md:pt-6 md:p-1 md:pl-5 md:pb-8 font-medium'>
             {dashboardLinks.map((item, value) => {
               return (
                 <Link
