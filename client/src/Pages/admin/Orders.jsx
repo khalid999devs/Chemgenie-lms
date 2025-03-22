@@ -11,7 +11,7 @@ const Orders = () => {
   const navigate = useNavigate();
   const [pendingOrders, setPendingOrders] = useState([]);
   const [verifiedOrders, setVerifiedOrders] = useState([]);
-  const [confirmToggle, setConfirmToggle] = useState([]);
+  const [confirmToggle, setConfirmToggle] = useState(false);
 
   useEffect(() => {
     if (mode === 'pending') {
@@ -63,9 +63,11 @@ const Orders = () => {
         } else {
           alert(res.data.msg);
         }
+        setRecordLoading(false);
       })
       .catch((err) => {
         alert(err.response.data.msg);
+        setRecordLoading(false);
       });
   };
 

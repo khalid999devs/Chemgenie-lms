@@ -8,10 +8,10 @@ const Coursecard = ({
   hasEnrolled,
   classes,
 }) => {
-  const descriptionLengthLimit = 100;
+  const descriptionLengthLimit = 115;
   return (
     <div
-      className={`w-[370px] h-[455px] border mx-auto rounded-xl shadow-lg bg-onPrimary-main hover:scale-[101%] duration-500 transition-transform cursor-pointer flex flex-col overflow-hidden ${classes}`}
+      className={`w-[370px] h-[475px] border mx-auto rounded-xl shadow-lg bg-onPrimary-main hover:scale-[101%] duration-500 transition-transform cursor-pointer flex flex-col overflow-hidden ${classes}`}
       onClick={onClick}
     >
       <img
@@ -22,7 +22,6 @@ const Coursecard = ({
 
       <div className='p-5 flex flex-col flex-grow text-Text'>
         <h5 className='text-xl font-semibold'>{title || 'Course Title'}</h5>
-
         <p className='text-primary-dark text-sm mt-3 line-clamp-3 flex-grow'>
           {(description?.length > descriptionLengthLimit
             ? description.slice(0, descriptionLengthLimit) + '...'

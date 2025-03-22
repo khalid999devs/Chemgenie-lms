@@ -20,7 +20,7 @@ const MyCourses = ({ user }) => {
       id='courses'
       className='mt-[100px] grid place-items-center w-full m-auto gap-5'
     >
-      <h1 className='inline-flex items-center text-onPrimary-main font-bold text-[2.4rem] pb-2'>
+      <h1 className='inline-flex items-center text-onPrimary-main font-bold text-[2rem] sm:text-[2.4rem] pb-2'>
         <span className='underline underline-offset-4 text-secondary-main'>
           <span className='text-onPrimary-main'>Explore</span>
         </span>
