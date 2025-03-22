@@ -239,25 +239,32 @@ const deleteSingleQuesAns = async (req, res) => {
 };
 
 const getAllQues = async (req, res) => {
-  const { examId, mode } = req.body;
-  let allQuesAns = await redis.get(`question@${examId}`);
+  const { examId, mode, fetchMode } = req.body;
+  let allQuesAns;
+  try {
+    if (fetchMode === 'server') throw new Error('skip redis');
+    allQuesAns = await redis.get(`question@${examId}`);
 
-  // console.log(allQuesAns);
-
-  if (!allQuesAns) {
-    const exam = await exams.findByPk(examId);
-    if (!exam) {
-      throw new NotFoundError('Could not found the exam!');
-    }
-    allQuesAns = exam.quesAns;
+    if (!allQuesAns) throw new Error('No Question in redis');
+  } catch (error) {
     if (!allQuesAns) {
-      throw new BadRequestError('Could not found any question!');
+      const exam = await exams.findByPk(examId);
+      if (!exam) {
+        throw new NotFoundError('Could not found the exam!');
+      }
+      allQuesAns = exam.quesAns;
+      if (!allQuesAns) {
+        throw new BadRequestError('Could not found any question!');
+      }
     }
   }
+
+  // console.log(allQuesAns);
   const parsedRes = JSON.parse(allQuesAns);
   let result;
+
   if (mode === 'question') {
-    result = parsedRes.questions;
+    result = parsedRes?.questions;
   } else if (mode === 'answer') {
     result = mergeArraysToObjKey(parsedRes.questions, parsedRes.answers, 'id');
   } else {
