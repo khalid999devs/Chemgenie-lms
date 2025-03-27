@@ -21,7 +21,7 @@ const Hero = () => {
           </p>
           <h1 className='font-bold text-[2.9rem] sm:text-5xl xl:text-6xl text-onPrimary-main leading-tight sm:leading-[3.5rem] xl:leading-[4.2rem]'>
             Learn <span className=''>Chemistry</span> with&nbsp;
-            <span className='text-yellow-400'>Afnan</span>
+            <span className='text-yellow-400'>Afnan Sir</span>
           </h1>
           <p className='text-onPrimary-main text-md break-words mt-4 sm:mt-0'>
             Interactive classes designed for your success.

@@ -56,7 +56,7 @@ const FooterMain = () => {
             </h2>
           </div>
           <div className='flex flex-col pl-0.5 gap-2 font-light'>
-            <IconText text={contacts.phone[0]} icon={<FaPhone />} />
+            {/* <IconText text={contacts.phone[0]} icon={<FaPhone />} /> */}
             <IconText text={contacts.emails[0]} icon={<FaEnvelope />} />
             <IconText text={contacts.location} icon={<FaLocationDot />} />
             <PrimaryButton
