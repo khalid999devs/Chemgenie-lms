@@ -2,52 +2,66 @@ import { useState } from "react";
 import { MdClose, MdPhoto, MdSend } from "react-icons/md";
 import { FaFileAlt } from "react-icons/fa";
 import { admin } from "../../../axios/discussion";
+import TextFormatter from "../TextFormatter";
 function InputBox({ replyId, setReplyId, cid, replyMsg }) {
   const [inputValue, setInputValue] = useState("");
   const [rows, setRows] = useState(1);
   const [selectedImage, chooseImgs] = useState([]);
-
+  const [load, setLoad] = useState(false);
   const handleInputChange = (event) => {
-    setInputValue((pre) => event.target.value);
-    const lines = event.target.value.split("\n");
-    setRows(Math.min(3, lines.length));
+    setInputValue(event);
+    // const lines = event.target.value.split("\n");
+    // setRows(Math.min(3, lines.length));
   };
 
   function sendChat(e) {
     e.preventDefault();
-    const fData = new FormData();
-    fData.append("question", inputValue);
-    fData.append("courseId", cid);
-    if (selectedImage.length > 0)
-      selectedImage.forEach((img) => {
-        fData.append("discussions", img);
+    try {
+      setLoad(true);
+      const fData = new FormData();
+      fData.append("question", inputValue);
+      fData.append("courseId", cid);
+      if (selectedImage.length > 0)
+        selectedImage.forEach((img) => {
+          fData.append("discussions", img);
+        });
+      // console.log(selectedImage);
+      admin.addDiscussion(fData).then(() => {
+        setInputValue("");
+        setRows(1);
+        chooseImgs([]);
       });
-    // console.log(selectedImage);
-    admin.addDiscussion(fData).then(() => {
-      setInputValue("");
-      setRows(1);
-      chooseImgs([]);
-    });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoad(false);
+    }
   }
-  
+
   function replyChat(e) {
     e.preventDefault();
-    const fData = new FormData();
-    fData.append("reply", inputValue);
-    fData.append("courseId", cid);
-    fData.append("discussionId", replyMsg?.id);
+    try {
+      const fData = new FormData();
+      fData.append("reply", inputValue);
+      fData.append("courseId", cid);
+      fData.append("discussionId", replyMsg?.id);
 
-    if (selectedImage.length > 0)
-      selectedImage.forEach((img) => {
-        fData.append("discussions", img);
+      if (selectedImage.length > 0)
+        selectedImage.forEach((img) => {
+          fData.append("discussions", img);
+        });
+      admin.reply(fData).then(() => {
+        alert("REPLY sent!!");
+        setInputValue("");
+        setRows(1);
+        chooseImgs([]);
+        setReplyId(-1);
       });
-    admin.reply(fData).then(() => {
-      alert("REPLY sent!!");
-      setInputValue("");
-      setRows(1);
-      chooseImgs([]);
-      setReplyId(-1);
-    });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoad(false);
+    }
   }
 
   return (
@@ -98,28 +112,20 @@ function InputBox({ replyId, setReplyId, cid, replyMsg }) {
         onSubmit={replyId > -1 ? replyChat : sendChat}
       >
         <div
-          className={`flex flex-1 items-center gap-3 p-2.5 dark:bg-stone-900/30 bg-stone-800/70 text-white border-gray-300 flex-grow outline-none border-0 ring-[1.5px] ring-blue-500 ${
-            rows > 1 ? "rounded-lg" : "rounded-full"
-          }`}
+          className={`flex flex-1 overflow-hidden items-center gap-3 p-2.5 bg-white text-black border-gray-300 flex-grow outline-none border-0 ring-[1.5px] ring-blue-500 rounded-md`}
         >
-          <textarea
-            className={`w-4/5 flex-grow outline-none border-0 bg-transparent`}
-            value={inputValue}
-            rows={rows}
-            onChange={handleInputChange}
-            required
-            placeholder="Write something..."
-            style={{
-              resize: "none",
-              overflow: "auto",
-            }}
+          <TextFormatter
+            pad="w-4/5 h-44 flex-grow outline-none border-0 bg-transparent"
+            setValue={handleInputChange}
           />
-          {/* divider */}
-          <hr className="h-5 w-1 bg-slate-500 rounded-full " />
+        </div>
+
+        <div className="transition-colors ease-out w-10 h-10 p-2 bg-blue-700 hover:bg-blue-500 text-white rounded-full flex justify-center items-center">
           {/* photo choose */}
           <label
-            className="hover:bg-trans_bluish rounded-full w-fit text-blue-500 p-2 cursor-pointer duration-300 ease-out"
+            className="rounded-full w-fit text-blue-50 p-2 cursor-pointer duration-300 ease-out"
             htmlFor="choosePhoto"
+            title="select files"
           >
             <MdPhoto />
           </label>
@@ -135,6 +141,7 @@ function InputBox({ replyId, setReplyId, cid, replyMsg }) {
           />
         </div>
         <button
+          title="send message"
           className="transition-colors ease-out w-10 h-10 p-2 bg-blue-700 hover:bg-blue-500 text-white rounded-full flex justify-center items-center "
           type="submit"
         >
@@ -150,7 +157,10 @@ function InputBox({ replyId, setReplyId, cid, replyMsg }) {
           }}
         >
           <span className="font-bold">
-            {JSON.parse(replyMsg?.user ? replyMsg?.user : JSON.stringify(""))?.userName}
+            {
+              JSON.parse(replyMsg?.user ? replyMsg?.user : JSON.stringify(""))
+                ?.userName
+            }
           </span>{" "}
           <br />
           <span className="font-extralight ">{replyMsg?.question}</span>

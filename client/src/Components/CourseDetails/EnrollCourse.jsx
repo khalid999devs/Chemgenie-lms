@@ -132,7 +132,7 @@ const EnrollCourse = () => {
                   required: true,
                 }}
               />
-              <ValuedInput
+              {/* <ValuedInput
                 label={'Address'}
                 inputProps={{
                   value: reqData?.address,
@@ -141,7 +141,7 @@ const EnrollCourse = () => {
                   placeholder: 'area, district, country',
                   required: true,
                 }}
-              />
+              /> */}
               <ValuedInput
                 label={'Phone'}
                 inputProps={{
@@ -152,7 +152,7 @@ const EnrollCourse = () => {
                   required: true,
                 }}
               />
-              <ValuedInput
+              {/* <ValuedInput
                 label={'Post Code'}
                 inputProps={{
                   value: reqData?.postCode,
@@ -160,15 +160,15 @@ const EnrollCourse = () => {
                   name: 'postCode',
                   placeholder: '3452',
                 }}
-              />
+              /> */}
 
-              <OptionField
+              {/* <OptionField
                 id={'currencySelect'}
                 label={'Currency'}
                 setValue={handleChange}
                 optionsObjs={currencyOptions}
                 name={'currType'}
-              />
+              /> */}
             </div>
             <div className='flex flex-col gap-10 items-center justify-start'>
               <div className='max-w-[350px] p-3 w-full'>

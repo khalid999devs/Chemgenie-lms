@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import parse from 'html-react-parser';
 import Timer from "./Timer";
 import {
   addStudentAns,
@@ -100,8 +101,11 @@ const MCQExam = () => {
               <label
                 className="block pointer-events-none"
                 htmlFor={option + index}
-                dangerouslySetInnerHTML={{ __html: option?.title }}
-              ></label>
+              >
+                {parse(option?.title, {
+                  trim: true,
+                })}
+              </label>
             </li>
           );
         })}
@@ -203,7 +207,11 @@ const MCQExam = () => {
             <div className="flex items-center justify-between">
               <h2 className="text-lg mt-5 font-semibold pointer-events-none select-none flex gap-3">
                 {id + 1}.
-                <span dangerouslySetInnerHTML={{ __html: ques?.title }}></span>
+                <span>
+                  {parse(ques?.title, {
+                    trim: true,
+                  })}
+                </span>
               </h2>
               <span className="float-right text-red-500 font-semibold">
                 {ques?.mark}

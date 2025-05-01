@@ -9,6 +9,7 @@ function FormInput({
   id,
   type,
   box,
+  required = false,
 }) {
   return (
     <div className={`w-full px-3 ${extraclass}`}>
@@ -17,6 +18,7 @@ function FormInput({
         htmlFor={id}
       >
         {title}
+        {required && <sup className="text-red-500 text-sm">*</sup>}
       </label>
       {box == "textarea" ? (
         <textarea
@@ -27,7 +29,7 @@ function FormInput({
           type="textarea"
           aria-rowcount={4}
           placeholder={placeHolder}
-          required
+          required={required}
           onChange={handleChange}
         ></textarea>
       ) : (
@@ -37,14 +39,14 @@ function FormInput({
           value={value}
           type={type}
           placeholder={placeHolder}
-          required
+          required={required}
           onChange={handleChange}
         />
       )}
     </div>
   );
 }
-function FileInput({ value, change, extraClass }) {
+function FileInput({ value, change, extraClass, required = false }) {
   return (
     <div
       className={`upload mb-6 mx-3 outline-2 bg-onPrimary-main outline-dotted outline-purple-600 p-3 rounded-lg transition-colors ${extraClass}`}
@@ -55,7 +57,7 @@ function FileInput({ value, change, extraClass }) {
         <ul className="list-none m-4 text-rose-600">
           <li>
             <span className="text-xs block ">
-              *Image size should not exceed 4 MB 
+              *Image size should not exceed 4 MB
             </span>
           </li>
           <li>
@@ -77,7 +79,7 @@ function FileInput({ value, change, extraClass }) {
         id="banner"
         type="file"
         accept="image/jpg,image/jpeg,image/png"
-        required
+        required={required}
         onChange={change}
       />
       {value && (

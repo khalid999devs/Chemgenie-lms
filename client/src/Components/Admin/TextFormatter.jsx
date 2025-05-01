@@ -10,9 +10,10 @@ Quill.register(Script, true);
 function TextFormatter({ pad, setValue }) {
   return (
     <ReactQuill
-      className={`bg-white ${pad}`}
+      className={`bg-white ${pad} placeholder:text-blue-600`}
       theme="snow"
       onChange={setValue}
+      placeholder="Example: 2x + 3y = 10"
       modules={{
         toolbar: [
           ["bold", "italic", "underline"],

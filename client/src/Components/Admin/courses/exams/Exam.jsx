@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { FormInput } from "../input";
 import PrimaryButton from "../../../Buttons/PrimaryButton";
 import { FiEdit } from "react-icons/fi";
+import parse from "html-react-parser";
 import {
   addExam,
   addSingleQues,
@@ -292,7 +293,12 @@ const AddQuestion = ({ eid, category, startTime = 0 }) => {
           }
         }}
       >
-        {eid + 1}. <p dangerouslySetInnerHTML={{ __html: ele }}></p>
+        {eid + 1}.{" "}
+        <p>
+          {parse(ele, {
+            trim: true,
+          })}
+        </p>
       </button>
     ));
   }, [opt, ans, setAns]);
@@ -486,9 +492,11 @@ const AddQuestion = ({ eid, category, startTime = 0 }) => {
                     </span>
                     <p className="text-red-500 mb-1 flex gap-3">
                       {l - id}.
-                      <span
-                        dangerouslySetInnerHTML={{ __html: quest.title }}
-                      ></span>
+                      <span>
+                        {parse(quest.title, {
+                          trim: true,
+                        })}
+                      </span>
                       <button
                         className="hover:bg-purple-400 rounded-full p-1 text-xl opacity-0 group-[ques]:group-hover:opacity-100 transition"
                         type="button"
@@ -528,9 +536,11 @@ const AddQuestion = ({ eid, category, startTime = 0 }) => {
                             key={`${qOpt?.id}+${qOpt?.title}`}
                           >
                             {qOpt?.id}.
-                            <p
-                              dangerouslySetInnerHTML={{ __html: qOpt?.title }}
-                            ></p>
+                            <p>
+                              {parse(qOpt?.title, {
+                                trim: true,
+                              })}
+                            </p>
                           </li>
                         );
                       })}
@@ -543,10 +553,11 @@ const AddQuestion = ({ eid, category, startTime = 0 }) => {
                           <li
                             className="border p-1 border-black text-black"
                             key={`${qans}+${aid}`}
-                            dangerouslySetInnerHTML={{
-                              __html: quest?.quesOptions[qans - 1]?.title,
-                            }}
-                          ></li>
+                          >
+                            {parse(quest?.quesOptions[qans - 1]?.title, {
+                              trim: true,
+                            })}
+                          </li>
                         );
                       })}
                     </ol>

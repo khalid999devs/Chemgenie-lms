@@ -2,6 +2,8 @@ import React from "react";
 import { MdOutlineReply, MdDeleteOutline, MdReply } from "react-icons/md";
 import { reqImgWrapper, reqPdfWrapper } from "../../../assets/requests";
 import { FaFileAlt } from "react-icons/fa";
+import parse from "html-react-parser";
+
 const Card = ({
   sender,
   message,
@@ -16,6 +18,7 @@ const Card = ({
     alert("Will be available soon!");
   }
 
+  if (!message) return null;
   return (
     <div
       className={`w-fit max-w-[75%] p-2 mb-4 rounded-xl relative  ${
@@ -26,8 +29,11 @@ const Card = ({
     >
       <div>
         <h3 className={`font-bold mb-2 text-base text-teal-400`}>{sender}</h3>
-        <p className={` break-words text-sm`}>{message}</p>
-
+        <p className={` break-words text-sm`}>
+          {parse(message, {
+            trim: true,
+          })}
+        </p>
         <div
           className={`absolute top-1/2 -translate-y-1/2 hidden ${
             isTeacher === "admin"
@@ -45,7 +51,7 @@ const Card = ({
         </div>
         {/* image component */}
         <div className="flex flex-wrap">
-        {files.map((file, id) => {
+          {files.map((file, id) => {
             if (file?.filename?.includes(".pdf"))
               return (
                 <a
@@ -129,7 +135,11 @@ const Card = ({
                             </a>
                           );
                         return (
-                          <a key={`${id}%${id}`} href={reqImgWrapper(file?.path)} target="_blank">
+                          <a
+                            key={`${id}%${id}`}
+                            href={reqImgWrapper(file?.path)}
+                            target="_blank"
+                          >
                             <img
                               className="aspect-square max-w-xs h-auto w-36 m-1 rounded-md overflow-hidden"
                               width={500}

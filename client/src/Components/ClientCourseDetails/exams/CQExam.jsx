@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { MdClose } from "react-icons/md";
+import parse from "html-react-parser";
 import {
   getQuesClient,
   addStdFilesAns,
@@ -7,7 +9,7 @@ import {
 } from "../../../axios/global";
 import { reqImgWrapper } from "../../../assets/requests";
 import Timer from "./Timer";
-import { MdClose } from "react-icons/md";
+
 //main component
 
 const CQExam = () => {
@@ -151,7 +153,12 @@ const Questions = ({ id, qid, eid, cid, title, mark, images, allowSubmit }) => {
       {/* header */}
       <section className="flex justify-between p-2">
         <h1 className="font-semibold tracking-wide text-blue-950 flex items-center gap-3">
-          {id + 1}.<span dangerouslySetInnerHTML={{ __html: title }}></span>
+          {id + 1}.
+          <span>
+            {parse(title, {
+              trim: true,
+            })}
+          </span>
         </h1>
         <h1 className="font-semibold tracking-wide text-blue-950">{mark}</h1>
       </section>

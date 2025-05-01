@@ -64,6 +64,7 @@ const AddCourse = () => {
                     title={'Title'}
                     placeHolder={'Enter the title [minimum 2 words]'}
                     value={courseDetails.title}
+                    required
                     handleChange={(e) =>
                       setCourse((pre) => ({ ...pre, title: e.target.value }))
                     }
@@ -89,6 +90,7 @@ const AddCourse = () => {
                     extraclass={'mb-4'}
                     id={'tags'}
                     title={'Tags'}
+                    required
                     placeHolder={'chemistry,organic,organic chemistry'}
                     value={courseDetails.tags}
                     handleChange={(e) =>
@@ -99,6 +101,7 @@ const AddCourse = () => {
                     extraclass={'mb-4'}
                     id={'schedule'}
                     title={'Schedule'}
+                    required
                     placeHolder={'Sat, Mon, Wed | 10:30 pm'}
                     value={courseDetails.schedule}
                     handleChange={(e) =>
@@ -122,6 +125,7 @@ const AddCourse = () => {
                     id={'crsPrice'}
                     title={'Course price'}
                     type={'number'}
+                    required
                     placeHolder={'2000 TK'}
                     value={courseDetails.cPrice}
                     handleChange={(e) =>
