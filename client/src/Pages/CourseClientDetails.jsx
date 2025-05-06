@@ -42,6 +42,7 @@ const CourseClientdetails = () => {
         </section>
       </div>
     );
+
   return (
     <CourseContext.Provider value={{ courseInfo, setCourse }}>
       <div className='w-full m-auto mb-20 mt-6 relative'>

@@ -32,11 +32,16 @@ const EnrollCourse = () => {
   const [popup, setPopup] = useState({ text: '', state: '' });
 
   useEffect(() => {
-    axios.get(reqs.IS_CLIENT_VALID, { withCredentials: true }).then((res) => {
-      if (!res.data.succeed) {
+    axios
+      .get(reqs.IS_CLIENT_VALID, { withCredentials: true })
+      .then((res) => {
+        if (!res.data.succeed) {
+          navigate(`/login?courseId=${courseId}`, { replace: true });
+        }
+      })
+      .catch((err) => {
         navigate(`/login?courseId=${courseId}`, { replace: true });
-      }
-    });
+      });
     fetchCourse(courseId, setData);
   }, []);
 
