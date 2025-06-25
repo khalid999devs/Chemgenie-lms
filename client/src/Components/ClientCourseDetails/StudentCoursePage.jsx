@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { AiFillPlayCircle, AiFillWechat } from 'react-icons/ai';
 import { PiNotebook } from 'react-icons/pi';
 import { CourseContextConsumer } from '../../Pages/CourseClientDetails';
 import { FaBook } from 'react-icons/fa';
 import { Helmet } from 'react-helmet-async';
+import IpOverlay from '../Utils/IpOverlay';
 
 const StudentCoursePage = () => {
   const [currentTab, setCurTab] = useState(localStorage?.value);
   const navigate = useNavigate();
   const { courseInfo } = CourseContextConsumer();
+  const [userNetworkIp, setUserNetworkIp] = useState({});
   function handleTab(e) {
     setCurTab(e);
     navigate(e);
   }
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+      .then((res) => res.json())
+      .then((data) => {
+        setUserNetworkIp(data);
+      });
+  }, []);
+
   return (
     <div
       className={`left-side ${currentTab == 'chat' ? 'h-[75vh] mb-10' : ''}`}
@@ -80,6 +91,9 @@ const StudentCoursePage = () => {
       <div>
         <Outlet context={courseInfo} />
       </div>
+
+      {/* Ip water text */}
+      {userNetworkIp.ip && <IpOverlay ip={userNetworkIp.ip} color={'black'} />}
     </div>
   );
 };

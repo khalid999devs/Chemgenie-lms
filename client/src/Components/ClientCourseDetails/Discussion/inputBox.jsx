@@ -3,6 +3,7 @@ import { MdClose, MdPhoto, MdSend } from 'react-icons/md';
 import { FaFileAlt } from 'react-icons/fa';
 import { client } from '../../../axios/discussion';
 import { IoMdClose } from 'react-icons/io';
+import { FaHourglassEnd } from 'react-icons/fa6';
 
 function InputBox({
   replyId,
@@ -16,6 +17,7 @@ function InputBox({
   const [inputValue, setInputValue] = useState('');
   const [rows, setRows] = useState(1);
   const [selectedImage, chooseImgs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function handleInputChange(event) {
     setInputValue((pre) => event.target.value);
@@ -25,6 +27,7 @@ function InputBox({
 
   function sendChat(e) {
     e.preventDefault();
+    setLoading(true);
     const fData = new FormData();
     fData.append('question', inputValue);
     fData.append('courseId', cid);
@@ -32,17 +35,23 @@ function InputBox({
       selectedImage.forEach((img) => {
         fData.append('discussions', img);
       });
-    client.addDiscussion(fData).then((data) => {
-      setChats((chats) => [...chats, data.discussion]);
-      setInputValue('');
-      setRows(1);
-      chooseImgs([]);
-      setOwnInput((ownInput) => !ownInput);
-    });
+    client
+      .addDiscussion(fData)
+      .then((data) => {
+        setChats((chats) => [...chats, data.discussion]);
+        setInputValue('');
+        setRows(1);
+        chooseImgs([]);
+        setOwnInput((ownInput) => !ownInput);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   function replyChat(e) {
     e.preventDefault();
+    setLoading(true);
     const fData = new FormData();
     fData.append('reply', inputValue);
     fData.append('courseId', cid);
@@ -52,21 +61,26 @@ function InputBox({
       selectedImage.forEach((img) => {
         fData.append('discussions', img);
       });
-    client.reply(fData).then((data) => {
-      // alert('REPLY sent!!');
-      setChats((chats) =>
-        chats.map((item) => {
-          if (item.id === data.discussion.id) {
-            item.commentreplies = data.discussion.commentreplies;
-          }
-          return item;
-        })
-      );
-      setInputValue('');
-      setRows(1);
-      chooseImgs([]);
-      setReplyId(-1);
-    });
+    client
+      .reply(fData)
+      .then((data) => {
+        // alert('REPLY sent!!');
+        setChats((chats) =>
+          chats.map((item) => {
+            if (item.id === data.discussion.id) {
+              item.commentreplies = data.discussion.commentreplies;
+            }
+            return item;
+          })
+        );
+        setInputValue('');
+        setRows(1);
+        chooseImgs([]);
+        setReplyId(-1);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -156,8 +170,9 @@ function InputBox({
         <button
           className='transition-colors ease-out w-10 h-10 p-2 bg-blue-700 hover:bg-blue-500 text-white rounded-full flex justify-center items-center '
           type='submit'
+          disabled={loading}
         >
-          <MdSend size={20} />
+          {loading ? <FaHourglassEnd size={20} /> : <MdSend size={20} />}
         </button>
       </form>
       {/* reply box */}

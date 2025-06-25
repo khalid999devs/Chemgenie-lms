@@ -10,6 +10,7 @@ import {
 import { MdClose } from 'react-icons/md';
 import axios from 'axios';
 import reqs from '../../assets/requests';
+import IpOverlay from '../Utils/IpOverlay';
 
 const YTPlayer = () => {
   const playerRef = useRef(null);
@@ -35,6 +36,7 @@ const YTPlayer = () => {
   const qualities = ['hd720', 'large', 'medium'];
   // const [isWatchDone,setIsWatchDone]=useState(false)
   const [doneReqCount, setIsDoneReqCount] = useState(0);
+  const [userNetworkIp, setUserNetworkIp] = useState({});
 
   const togglePlay = () => {
     setIsPlaying((prev) => !prev);
@@ -42,6 +44,14 @@ const YTPlayer = () => {
   const toggleControl = () => {
     setShowControl((prev) => !prev);
   };
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+      .then((res) => res.json())
+      .then((data) => {
+        setUserNetworkIp(data);
+      });
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem('cp')) {
@@ -294,6 +304,8 @@ const YTPlayer = () => {
           zIndex: '500',
         }}
       >
+        {/* IP Overlay */}
+        {userNetworkIp.ip && <IpOverlay ip={userNetworkIp.ip} />}
         {/* duration shower */}
         <div
           className='text-sm select-none p-2 flex items-center justify-center rounded-md gap-3'

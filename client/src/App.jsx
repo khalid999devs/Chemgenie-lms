@@ -6,6 +6,7 @@ import './axios/global';
 import reqs from './assets/requests';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import useContentProtection from './Custom_hooks/useContentProtection';
 
 const Context = createContext('');
 
@@ -29,6 +30,7 @@ function App() {
     redirect: '',
   });
   const [contextTrigger, setContextTrigger] = useState(false);
+  useContentProtection(user?.email);
 
   const resetUser = () => {
     setUser((user) => {
